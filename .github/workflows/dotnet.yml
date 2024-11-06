@@ -1,0 +1,31 @@
+name: Build and Run .NET 6 Hello World
+
+on:
+  push:
+    branches:
+      - main  # Triggers the workflow on push to the main branch
+  pull_request:
+    branches:
+      - main  # Also triggers on PRs to the main branch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest  # You can change this to windows-latest or macos-latest if needed
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3  # This step checks out the code in the repository
+
+    - name: Set up .NET 6 SDK
+      uses: actions/setup-dotnet@v3  # This action sets up .NET 6 SDK on the runner
+      with:
+        dotnet-version: '6.0'  # Specify the .NET version to use
+
+    - name: Restore dependencies
+      run: dotnet restore  # Restore the project dependencies
+
+    - name: Build the application
+      run: dotnet build --configuration Release  # Build the application in Release configuration
+
+    - name: Run the application
+      run: dotnet run  # Run the application
